@@ -1,0 +1,2 @@
+# daomgo
+mongodb in daocloud
