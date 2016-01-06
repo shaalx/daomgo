@@ -9,7 +9,7 @@ import (
 var (
 	// MgoDB_ = daomgo.NewMgoDB("daocloud")
 	MgoDB_ = daomgo.NewMgoDB(daomgo.Conn())
-	usersC = MgoDB_.GetCollection([]string{"lEyTj8hYrUIKgMfi", "users"}...)
+	usersC = MgoDB_.GetCollection([]string{"IEyTj8hYrUIKgMfi", "users"}...)
 )
 
 type User struct {
@@ -36,4 +36,8 @@ func main() {
 	ret := usersC.Like(selector)
 	log.Println(ret)
 	log.Println(len(ret))
+
+	selector = bson.M{"id": "3"}
+	ret = usersC.ISelect(selector)
+	log.Println(ret)
 }
