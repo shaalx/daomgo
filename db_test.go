@@ -8,8 +8,8 @@ import (
 )
 
 var (
-	MgoDB_ = NewMgoDB("daocloud")
-	// MgoDB_ = NewMgoDB(Conn())
+	// MgoDB_ = NewMgoDB("")
+	MgoDB_ = NewMgoDB(Conn())
 	// upsertC = MgoDB_.GetCollection([]string{"test", "upsert"}...)
 	usersC = MgoDB_.GetCollection([]string{"lEyTj8hYrUIKgMfi", "users"}...)
 )
@@ -24,16 +24,17 @@ type User struct {
 	Name string `bson:"name"`
 }
 
-// func TestUpsert(t *testing.T) {
-// 	selector := bson.M{"id": "3"}
-// 	change := User{"3", "Two22"}
-// 	ret := upsertC.Upsert(selector, change)
-// 	t.Log(ret)
+func TestUpsert(t *testing.T) {
+	selector := bson.M{"id": "3"}
+	usersC.Insert(User{"3", "three"})
+	change := User{"3", "Two22"}
+	ret := usersC.Upsert(selector, change)
+	t.Log(ret)
 
-// 	change2 := User{"122", "Nil selector "}
-// 	ret = upsertC.Upsert(nil, change2)
-// 	t.Log(ret)
-// }
+	change2 := User{"122", "Nil selector "}
+	ret = usersC.Upsert(nil, change2)
+	t.Log(ret)
+}
 
 func TestLike(t *testing.T) {
 	// re, err := regexp.Compile(`/S/`)

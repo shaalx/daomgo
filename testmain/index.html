@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>test</title>
+</head>
+<body>
+<div>
+	<form method="POST" action="/insert">
+		<textarea rows="5" cols="20" id="content" name="content">
+			t
+			est
+
+		</textarea>
+		<input type="submit"> 
+	</form>
+</div>
+{{range .}}
+	ID:{{.id}}
+	Name:
+	<textarea rows="5" cols="20">
+		{{.name}}
+	</textarea>
+{{end}}
+</body>
+</html>

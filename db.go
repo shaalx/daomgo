@@ -46,8 +46,8 @@ func Conn() string {
 		conn += ":27017"
 	}
 	// defaultly using "test" as the db instance
-	// db := "lEyTj8hYrUIKgMfi"
-	db := "nation"
+	db := "IEyTj8hYrUIKgMfi"
+	// db := "nation"
 
 	if len(os.Getenv("MONGODB_INSTANCE_NAME")) > 0 {
 		db = os.Getenv("MONGODB_INSTANCE_NAME")
@@ -67,14 +67,14 @@ func RawMgoDB() *mgo.Collection {
 	session.SetMode(mgo.Monotonic, true)
 
 	// Collection People
-	c := session.DB("lEyTj8hYrUIKgMfi").C("users")
+	c := session.DB("IEyTj8hYrUIKgMfi").C("users")
 	// c := session.DB("nation").C("users")
 	return c
 }
 
 func NewMgoDB(dailStr string) *MgoDB {
 	if strings.EqualFold(dailStr, "daocloud") {
-		dailStr = "uMNEZzBVHh8l9YfP:pPLpK1lkMS82cq95e@10.10.72.139:27017/lEyTj8hYrUIKgMfi"
+		dailStr = "uMNEZzBVHh8l9YfP:pPLpK1lkMS82cq95e@10.10.72.139:27017/IEyTj8hYrUIKgMfi"
 	}
 	if len(dailStr) <= 0 {
 		dailStr = "127.0.0.1:27017"
