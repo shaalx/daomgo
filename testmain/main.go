@@ -44,6 +44,7 @@ func main() {
 	// ret = usersC.ISelect(nil)
 	// log.Println(ret)
 	http.HandleFunc("/insert", insert)
+	http.HandleFunc("/upsert", upsert)
 	http.HandleFunc("/", index)
 	http.ListenAndServe(":80", nil)
 }
@@ -56,6 +57,15 @@ func index(rw http.ResponseWriter, req *http.Request) {
 }
 
 func insert(rw http.ResponseWriter, req *http.Request) {
+	req.ParseForm()
+	cont := req.FormValue("content")
+	log.Println(cont)
+	usersC.Insert(User{Id: "12", Name: cont})
+	http.Redirect(rw, req, "/", 302)
+}
+
+
+func upsert(rw http.ResponseWriter, req *http.Request) {
 	req.ParseForm()
 	cont := req.FormValue("content")
 	log.Println(cont)
