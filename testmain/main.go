@@ -33,16 +33,16 @@ func TestUpsert() {
 }
 
 func main() {
-	// TestUpsert()
-	// selector := bson.M{"name": bson.RegEx{"a", "s"}}
-	// log.Println(selector)
-	// ret := usersC.Like(selector)
-	// log.Println(ret)
-	// log.Println(len(ret))
+	TestUpsert()
+	selector := bson.M{"name": bson.RegEx{"a", "s"}}
+	log.Println(selector)
+	ret := usersC.Like(selector)
+	log.Println(ret)
+	log.Println(len(ret))
 
-	// selector = bson.M{"id": "3"}
-	// ret = usersC.ISelect(nil)
-	// log.Println(ret)
+	selector = bson.M{"id": "3"}
+	ret = usersC.ISelect(nil)
+	log.Println(ret)
 	http.HandleFunc("/insert", insert)
 	http.HandleFunc("/upsert", upsert)
 	http.HandleFunc("/", index)
