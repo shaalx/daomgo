@@ -1,8 +1,10 @@
 FROM golang
 
 ENV GOPATH /gopath
-RUN go get github.com/shaalx/daomgo/testmain && go build -o tmain
+ADD . /app
+WORKDIR /app
+RUN go get github.com/shaalx/daomgo/testmain && go build -o tmain /app/testmain/main.go
 
 EXPOSE 80
 
-CMD ["tmain"]
+CMD ["/app/testmain/tmain"]
