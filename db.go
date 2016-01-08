@@ -74,7 +74,7 @@ func RawMgoDB() *mgo.Collection {
 
 func NewMgoDB(dailStr string) *MgoDB {
 	if strings.EqualFold(dailStr, "daocloud") {
-		dailStr = "uMNEZzBVHh8l9YfP:pPLpK1lkMS82cq95e@10.10.72.139:27017/IEyTj8hYrUIKgMfi"
+		dailStr = "uMNEZzBVHh8l9YfP:pPLpK1lkMS82cq95e@10.10.72.139:27017/lEyTj8hYrUIKgMfi"
 	}
 	if len(dailStr) <= 0 {
 		dailStr = "127.0.0.1:27017"

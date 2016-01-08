@@ -12,7 +12,9 @@ import (
 var (
 	// MgoDB_ = daomgo.NewMgoDB("daocloud")
 	MgoDB_ = daomgo.NewMgoDB(daomgo.Conn())
-	usersC = MgoDB_.GetCollection([]string{"IEyTj8hYrUIKgMfi", "users"}...)
+	// MgoDB   = dbu.NewMgoDB(dbu.Conn())
+	usersC = MgoDB_.GetCollection([]string{"lEyTj8hYrUIKgMfi", "users"}...)
+	// usersC = MgoDB_.GetCollection([]string{"IEyTj8hYrUIKgMfi", "users"}...)
 )
 
 type User struct {
@@ -63,7 +65,6 @@ func insert(rw http.ResponseWriter, req *http.Request) {
 	usersC.Insert(User{Id: "12", Name: cont})
 	http.Redirect(rw, req, "/", 302)
 }
-
 
 func upsert(rw http.ResponseWriter, req *http.Request) {
 	req.ParseForm()
