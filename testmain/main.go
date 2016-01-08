@@ -12,41 +12,23 @@ import (
 var (
 	// MgoDB_ = daomgo.NewMgoDB("daocloud")
 	MgoDB_ = daomgo.NewMgoDB(daomgo.Conn())
-	// MgoDB   = dbu.NewMgoDB(dbu.Conn())
-	usersC = MgoDB_.GetCollection([]string{"lEyTj8hYrUIKgMfi", "users"}...)
-	// usersC = MgoDB_.GetCollection([]string{"IEyTj8hYrUIKgMfi", "users"}...)
+	usersC = MgoDB_.GetCollection([]string{"lEyTj8hYrUIKgMfi", "OJProbs"}...)
 )
 
-type User struct {
-	Id   string `bson:"id"`
-	Name string `bson:"name"`
-}
-
-func TestUpsert() {
-	selector := bson.M{"id": "3"}
-	usersC.Insert(User{"3", "three"})
-	change := User{"3", "aaasss"}
-	ret := usersC.Upsert(selector, change)
-	log.Println(ret)
-
-	change2 := User{"122", "Nil selector "}
-	ret = usersC.Upsert(nil, change2)
-	log.Println(ret)
+type Model struct {
+	Id        string `json:"id"`
+	Title     string `json:"title"`
+	Desc      string `json:"desc"`
+	FuncName  string `json:"func_name"`
+	Content   string `json:"content"`
+	ArgsType  string `json:"args_type"`
+	RetsType  string `json:"rets_type"`
+	TestCases string `json:"test_cases"`
 }
 
 func main() {
-	TestUpsert()
-	selector := bson.M{"name": bson.RegEx{"a", "s"}}
-	log.Println(selector)
-	ret := usersC.Like(selector)
-	log.Println(ret)
-	log.Println(len(ret))
-
-	selector = bson.M{"id": "3"}
-	ret = usersC.ISelect(nil)
-	log.Println(ret)
 	http.HandleFunc("/insert", insert)
-	http.HandleFunc("/upsert", upsert)
+	http.HandleFunc("/edit", edit)
 	http.HandleFunc("/", index)
 	http.ListenAndServe(":80", nil)
 }
@@ -58,19 +40,24 @@ func index(rw http.ResponseWriter, req *http.Request) {
 	tpl.Execute(rw, data)
 }
 
-func insert(rw http.ResponseWriter, req *http.Request) {
-	req.ParseForm()
-	cont := req.FormValue("content")
-	log.Println(cont)
-	usersC.Insert(User{Id: "12", Name: cont})
-	http.Redirect(rw, req, "/", 302)
+func edit(rw http.ResponseWriter, req *http.Request) {
+	tpl, _ := template.New("edit.html").ParseFiles("edit.html")
+	tpl.Execute(rw, nil)
 }
 
-func upsert(rw http.ResponseWriter, req *http.Request) {
+func insert(rw http.ResponseWriter, req *http.Request) {
 	req.ParseForm()
-	cont := req.FormValue("content")
-	log.Println(cont)
-	slt := bson.M{"id": "12"}
-	usersC.Upsert(slt, User{Id: "12", Name: cont})
+	modle := Model{}
+	modle.Id = req.FormValue("id")
+	modle.Title = req.FormValue("title")
+	modle.Desc = req.FormValue("desc")
+	modle.FuncName = req.FormValue("func_name")
+	modle.Content = req.FormValue("content")
+	modle.ArgsType = req.FormValue("args_type")
+	modle.RetsType = req.FormValue("rets_type")
+	modle.TestCases = req.FormValue("test_cases")
+	log.Println(modle)
+	slt := bson.M{"id": modle.Id}
+	usersC.Upsert(slt, modle)
 	http.Redirect(rw, req, "/", 302)
 }

@@ -2,24 +2,28 @@
 <html>
 <head>
 	<title>test</title>
+	<meta charset="utf-8">
+	<script src="https://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+	<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
 </head>
 <body>
-<div>
-	<form method="POST" action="/insert">
-		<textarea rows="5" cols="20" id="content" name="content">
-			t
-			est
-
-		</textarea>
-		<input type="submit"> 
-	</form>
-</div>
+<a href="/edit">EDIT</a>
+<div class="container-fluid">
+	
 {{range .}}
-	ID:{{.id}}
-	Name:
-	<textarea rows="5" cols="20">
-		{{.name}}
+	<label>ID:{{.id}}</label>
+	DESC:
+	<textarea rows="15" cols="40">
+		{{.desc}}
 	</textarea>
+	CONTENT:
+	<textarea rows="15" cols="40">
+		{{.content}}
+	</textarea>
+	<br>
+	<hr>
 {{end}}
+
+</div>
 </body>
 </html>

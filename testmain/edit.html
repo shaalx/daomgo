@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>test</title>
+	<meta charset="utf-8">
+	<script src="https://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+	<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+</head>
+<body>
+
+<div class="container">
+<a href="HOME">HOME</a>
+<form method="POST" action="/insert">
+	<div class="row">
+		<div class="col-md-4">
+			<div class="input-group">
+			    <div class="input-group-addon">Id</div>
+			    <input type="text" class="form-control" name="id" id="id" placeholder="ID">
+  			</div>
+		</div>
+		<div class="col-md-4">
+			<div class="input-group">
+		      <div class="input-group-addon">Title</div>
+		      <input type="text" class="form-control" id="title" name="title" placeholder="Title">
+		    </div>
+		</div>
+		<div class="col-md-4">
+			<div class="input-group">
+				<div class="input-group-addon">FuncName</div>
+				<input type="text" class="form-control" name="func_name" id="func_name" placeholder="FuncName">
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-4">
+			<div class="input-group">
+				<div class="input-group-addon">ArgesType</div>
+				<input type="text" id="args_type" name="args_type" class="form-control" placeholder="ArgesType">
+			</div>
+		</div>
+		<div class="col-md-4">
+			<div class="input-group">
+				<div class="input-group-addon">RetsType</div>
+				<input id="rets_type" name="rets_type" type="text" class="form-control" placeholder="RetsType">
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<div class="input-group">
+				<div class="input-group-addon">TestCases</div>
+				<textarea rows="6" id="test_cases" name="test_cases" class="form-control" placeholder="TestCases">					
+				</textarea>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-6">
+			<textarea rows="16" class="form-control" placeholder="Description" id="desc" name="desc"></textarea>
+		</div>
+		<div class="col-md-6">
+			<span id="markdownContent"></span>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<div class="input-group">
+				<div class="input-group-addon">Content</div>
+				<textarea rows="16" class="form-control" placeholder="Content" id="content" name="content"></textarea>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-8"></div>
+		<div class="col-md-4">
+			 <button type="submit" class="btn btn-warning">Submit</button>
+		</div>
+	</div>		
+	</form>
+</div>
+</body>
+</html>
