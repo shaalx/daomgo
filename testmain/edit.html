@@ -30,7 +30,7 @@
 				<input type="text" class="form-control" name="func_name" id="func_name" placeholder="FuncName">
 			</div>
 		</div>
-	</div>
+	</div><br>
 	<div class="row">
 		<div class="col-md-4">
 			<div class="input-group">
@@ -44,16 +44,15 @@
 				<input id="rets_type" name="rets_type" type="text" class="form-control" placeholder="RetsType">
 			</div>
 		</div>
-	</div>
+	</div><br>
 	<div class="row">
 		<div class="col-md-12">
 			<div class="input-group">
 				<div class="input-group-addon">TestCases</div>
-				<textarea rows="6" id="test_cases" name="test_cases" class="form-control" placeholder="TestCases">					
-				</textarea>
+				<textarea rows="6" id="test_cases" name="test_cases" class="form-control" placeholder="TestCases"></textarea>
 			</div>
 		</div>
-	</div>
+	</div><br>
 	<div class="row">
 		<div class="col-md-6">
 			<textarea rows="16" class="form-control" placeholder="Description" id="desc" name="desc"></textarea>
@@ -61,7 +60,7 @@
 		<div class="col-md-6">
 			<span id="markdownContent"></span>
 		</div>
-	</div>
+	</div><br>
 	<div class="row">
 		<div class="col-md-12">
 			<div class="input-group">
@@ -69,14 +68,33 @@
 				<textarea rows="16" class="form-control" placeholder="Content" id="content" name="content"></textarea>
 			</div>
 		</div>
-	</div>
+	</div><br>
 	<div class="row">
 		<div class="col-md-8"></div>
 		<div class="col-md-4">
 			 <button type="submit" class="btn btn-warning">Submit</button>
 		</div>
-	</div>		
+	</div><br>
 	</form>
 </div>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#desc").keypress( function(event){
+			if ("13"==event.which) {
+				rpcmd();
+			};
+		});
+	});
+
+	function CallbackFunc (data){
+		$("#markdownContent").html(data.mddata);
+	}
+	function rpcmd () {
+		$.getJSON("http://182.254.132.59/markdownCB?callback=?",{"rawContent":$("#desc").val()},function (data){
+	        console.log("callback-data:" + data.mddata);
+	    });
+	}
+</script>
 </body>
 </html>
