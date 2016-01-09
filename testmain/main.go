@@ -7,28 +7,30 @@ import (
 
 	"html/template"
 	"net/http"
+
+	"fmt"
+	"github.com/everfore/exc"
+	. "github.com/shaalx/gooj"
+	"github.com/shaalx/goutils"
+	"os"
+	"strings"
 )
 
 var (
 	// MgoDB_ = daomgo.NewMgoDB("daocloud")
-	MgoDB_ = daomgo.NewMgoDB(daomgo.Conn())
-	usersC = MgoDB_.GetCollection([]string{"lEyTj8hYrUIKgMfi", "OJProbs"}...)
+	MgoDB_      = daomgo.NewMgoDB(daomgo.Conn())
+	usersC      = MgoDB_.GetCollection([]string{"lEyTj8hYrUIKgMfi", "OJProbs"}...)
+	defaultpath string
 )
 
-type Model struct {
-	Id        string `json:"id"`
-	Title     string `json:"title"`
-	Desc      string `json:"desc"`
-	FuncName  string `json:"func_name"`
-	Content   string `json:"content"`
-	ArgsType  string `json:"args_type"`
-	RetsType  string `json:"rets_type"`
-	TestCases string `json:"test_cases"`
+func init() {
+	defaultpath, _ = os.Getwd()
 }
 
 func main() {
 	http.HandleFunc("/insert", insert)
 	http.HandleFunc("/edit", edit)
+	http.HandleFunc("/test", test)
 	http.HandleFunc("/", index)
 	http.ListenAndServe(":80", nil)
 }
@@ -45,8 +47,7 @@ func edit(rw http.ResponseWriter, req *http.Request) {
 	tpl.Execute(rw, nil)
 }
 
-func insert(rw http.ResponseWriter, req *http.Request) {
-	req.ParseForm()
+func parseForm(rw http.ResponseWriter, req *http.Request) *Model {
 	modle := Model{}
 	modle.Id = req.FormValue("id")
 	modle.Title = req.FormValue("title")
@@ -56,8 +57,28 @@ func insert(rw http.ResponseWriter, req *http.Request) {
 	modle.ArgsType = req.FormValue("args_type")
 	modle.RetsType = req.FormValue("rets_type")
 	modle.TestCases = req.FormValue("test_cases")
+	return &modle
+}
+
+func insert(rw http.ResponseWriter, req *http.Request) {
+	req.ParseForm()
+	modle := parseForm(rw, req)
 	log.Println(modle)
 	slt := bson.M{"id": modle.Id}
 	usersC.Upsert(slt, modle)
 	http.Redirect(rw, req, "/", 302)
+}
+
+func test(rw http.ResponseWriter, req *http.Request) {
+	cmd := exc.NewCMD("go test -v").Cd(defaultpath)
+	model := parseForm(rw, req)
+	fmt.Println(model)
+	path_ := strings.Split(req.RemoteAddr, ":")[1]
+	err := GenerateOjModle(path_, model)
+	goutils.CheckErr(err)
+	ret, err := cmd.Wd().Cd(path_).Debug().Do()
+	goutils.CheckErr(err)
+	rw.Write(ret)
+	fmt.Println(goutils.ToString(ret))
+	go cmd.Reset(fmt.Sprintf("rm -rf %s", path_)).Cd(defaultpath).ExecuteAfter(5)
 }

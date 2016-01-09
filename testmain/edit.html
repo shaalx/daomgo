@@ -9,7 +9,14 @@
 <body>
 
 <div class="container">
-<a href="HOME">HOME</a>
+	<div class="row">
+		<div class="col-md-2">
+			<a href="HOME">HOME</a>
+		</div>
+		<div class="col-md-2">
+			<button id="auto-input" class="btn btn-info">auto-input</button>
+		</div>
+	</div><br>
 <form method="POST" action="/insert">
 	<div class="row">
 		<div class="col-md-4">
@@ -66,12 +73,21 @@
 			<div class="input-group">
 				<div class="input-group-addon">Content</div>
 				<textarea rows="16" class="form-control" placeholder="Content" id="content" name="content"></textarea>
+				<div id="test" class="input-group-addon btn btn-info">Test</div>
+			</div>
+		</div>
+	</div><br>
+
+	<div id="result-div" class="row" style="display:none">
+		<div class="col-md-12">
+			<div class="input-group">
+				<div class="input-group-addon">Result</div>
+				<textarea id="result" rows="8" class="form-control" placeholder="Result"></textarea>
 			</div>
 		</div>
 	</div><br>
 	<div class="row">
-		<div class="col-md-8"></div>
-		<div class="col-md-4">
+		<div class="col-md-offset-8 col-md-4">
 			 <button type="submit" class="btn btn-warning">Submit</button>
 		</div>
 	</div><br>
@@ -79,7 +95,34 @@
 </div>
 
 <script type="text/javascript">
+	function autoinput() {
+		$("#func_name").val("mid");
+		$("#args_type").val("[]int");
+		$("#rets_type").val("int");
+		$("#test_cases").val('{in:[]int{1,2,3},out:2},\n'+
+		'{in:[]int{1,3,4},out:3},');
+		$("#content").text('package goojt\n\n'+
+		'func mid(args []int) int{\n'+
+		'	return args[1]\n'+
+		'}');
+	};
 	$(document).ready(function(){
+		$("#auto-input").click(function (argument) {
+			autoinput();
+		});
+		$("#test").click(function (argument) {
+			$("#result-div").css("display","");
+			$("#result").text("");
+			$.ajax({
+				 url: '/test',
+				 type: 'POST',
+				 data:{"id":$("#id").val(),"title":$("#title").val(),"func_name":$("#func_name").val(),"args_type":$("#args_type").val(),"rets_type":$("#rets_type").val(),"test_cases":$("#test_cases").val(),"desc":$("#desc").val(),"content":$("#content").val()},
+				 success: function(result) {
+				  	$("#result").text(result);
+				  	console.log(result);
+				 }
+			});
+		});
 		$("#desc").keypress( function(event){
 			if ("13"==event.which) {
 				rpcmd();
