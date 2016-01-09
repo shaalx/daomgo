@@ -9,17 +9,79 @@
 <body>
 <a href="/edit">EDIT</a>
 <div class="container-fluid">
-	
 {{range .}}
-	<label>ID:{{.id}}</label>
-	DESC:
-	<textarea rows="15" cols="40">{{.desc}}</textarea>
-	CONTENT:
-	<textarea rows="15" cols="40">{{.content}}</textarea>
-	<br>
-	<hr>
+	<div class="row">
+		<div class="col-md-2">
+			<a href="/edit/{{.id}}">Id<span class="badge">{{.id}}</span></a>
+		</div>
+	</div><br>
+	<div class="row">
+		<div class="col-md-3">
+			<div class="input-group">
+				<div class="input-group-addon">Title</div>
+				<input type="text" class="form-control" value="{{.title}}" disabled="disabled">
+			</div>
+		</div>
+		<div class="col-md-3">
+			<div class="input-group">
+				<div class="input-group-addon">FuncName</div>
+				<input type="text" class="form-control" value="{{.funcname}}" disabled="disabled">
+			</div>
+		</div>
+		<div class="col-md-3">
+			<div class="input-group">
+				<div class="input-group-addon">ArgsType</div>
+				<input type="text" class="form-control" value="{{.argstype}}" disabled="disabled">
+			</div>
+		</div>
+		<div class="col-md-3">
+			<div class="input-group">
+				<div class="input-group-addon">RetsType</div>
+				<input type="text" class="form-control" value="{{.retstype}}" disabled="disabled">
+			</div>
+		</div>
+	</div><br>
+	<div class="row">
+		<div class="col-md-6">
+			<pre class="markdownContent"></pre>
+			<div class="desc" style="display:none">{{.desc}}</div>
+			<div class="input-group">
+				<div class="input-group-addon">TestCases</div>
+				<textarea rows="6" class="form-control" disabled="disabled">{{.testcases}}</textarea>
+			</div>
+		</div>
+		<div class="col-md-6">
+			<textarea rows="15" class="form-control" disabled="disabled">{{.content}}</textarea>
+		</div>
+	</div><hr>
 {{end}}
-
 </div>
+
+<script type="text/javascript">
+	function CallbackFunc (data){
+	}
+	$(document).ready(function (argument) {
+		$(".markdownContent").each(function (argument) {
+			rpcmd($(this));
+		});
+		function rpcmd (markdownContent) {
+			var desc = $(markdownContent).next(".desc").text();
+			if (desc.length<=0) {
+				$(markdownContent).css("display","none");
+				return
+			};
+			$.ajax({
+		        type : "get",  
+		        url : "http://182.254.132.59/markdownCB?callback=?",
+		        dataType:"jsonp",
+	        	jsonpCallback:"CallbackFunc",
+	        	data:{"rawContent":desc},
+		        success : function(data){
+		            $(markdownContent).html(data.mddata);
+		        }
+		    });
+		}
+	});
+</script>
 </body>
 </html>

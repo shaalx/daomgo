@@ -57,6 +57,9 @@ func parseForm(rw http.ResponseWriter, req *http.Request) *Model {
 	modle.ArgsType = req.FormValue("args_type")
 	modle.RetsType = req.FormValue("rets_type")
 	modle.TestCases = req.FormValue("test_cases")
+	if strings.EqualFold("online", req.FormValue("online")) {
+		modle.Online = true
+	}
 	return &modle
 }
 

@@ -167,7 +167,7 @@ func (c *Collection) Upsert(selector bson.M, change interface{}) int {
 		return -1
 	}
 	if nil == selector {
-		return 0
+		return c.Insert(change)
 	}
 	_, err := c.C.Upsert(selector, change)
 	if goutils.CheckErr(err) {
