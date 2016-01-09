@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>test</title>
-	<meta charset="utf-8">
-	<script src="https://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
-	<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<title>OJ</title>
+<meta charset="utf-8">
+<script src="https://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.1.0/styles/default.min.css">
+<script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.1.0/highlight.min.js"></script>
 </head>
 <body>
 <a href="/edit">EDIT</a>
@@ -45,13 +47,15 @@
 		<div class="col-md-6">
 			<pre class="markdownContent"></pre>
 			<div class="desc" style="display:none">{{.desc}}</div>
-			<div class="input-group">
+			<pre><code class="go">{{.testcases}}</code></pre>
+			<!-- <div class="input-group">
 				<div class="input-group-addon">TestCases</div>
-				<textarea rows="6" class="form-control" disabled="disabled">{{.testcases}}</textarea>
-			</div>
+				<textarea rows="6" class="form-control" disabled="disabled"></textarea>
+			</div> -->
 		</div>
 		<div class="col-md-6">
-			<textarea rows="15" class="form-control" disabled="disabled">{{.content}}</textarea>
+			<pre><code class="go">{{.content}}</code></pre>
+			<!-- <textarea rows="15" class="form-control" disabled="disabled"></textarea> -->
 		</div>
 	</div><hr>
 {{end}}
@@ -60,7 +64,14 @@
 <script type="text/javascript">
 	function CallbackFunc (data){
 	}
+	
 	$(document).ready(function (argument) {
+		hljs.initHighlightingOnLoad();
+	});
+	$(document).ready(function (argument) {
+		/*$("pre code").each(function (i,block) {
+			hljs.highlightBlock(block);
+		})*/
 		$(".markdownContent").each(function (argument) {
 			rpcmd($(this));
 		});
