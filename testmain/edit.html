@@ -142,7 +142,7 @@
 		$("#markdownContent").html(data.mddata);
 	}
 	function rpcmd () {
-		$.getJSON("http://182.254.132.59/markdownCB?callback=?",{"rawContent":$("#desc").val()},function (data){
+		$.getJSON("http://bookmark.daoapp.io/markdownCB?callback=?",{"rawContent":$("#desc").val()},function (data){
 	        console.log("callback-data:" + data.mddata);
 	    });
 	}
