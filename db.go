@@ -2,7 +2,7 @@ package daomgo
 
 import (
 	"fmt"
-	"github.com/shaalx/goutils"
+	"github.com/toukii/goutils"
 	// "labix.org/v2/mgo"
 	// "labix.org/v2/mgo/bson"
 	mgo "gopkg.in/mgo.v2"
