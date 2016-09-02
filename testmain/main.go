@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/shaalx/daomgo"
+	"github.com/toukii/daomgo"
 	"gopkg.in/mgo.v2/bson"
 	"log"
 
@@ -10,8 +10,8 @@ import (
 
 	"fmt"
 	"github.com/everfore/exc"
-	. "github.com/shaalx/gooj"
-	"github.com/shaalx/goutils"
+	. "github.com/toukii/gooj"
+	"github.com/toukii/goutils"
 	"os"
 	"strings"
 )
