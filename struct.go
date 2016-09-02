@@ -2,7 +2,7 @@ package daomgo
 
 import (
 	"encoding/json"
-	"github.com/shaalx/goutils"
+	"github.com/toukii/goutils"
 )
 
 func ConvStruct(i interface{}, ret interface{}) bool {
